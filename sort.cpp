@@ -24,7 +24,7 @@ vector <int> vectorzao;
 long long int cont;
 
 string merge_sort(vector<int> &v){
-    if(v.size()==1) return "Vetor de tamanho 1";
+    if(v.size()==1) return "Vetor_de_tamanho_1";
 
     vector<int> u1, u2;
 
@@ -51,7 +51,7 @@ string merge_sort(vector<int> &v){
         }
     }
 
-    return "Sim";
+    return "Ordenado";
 }
 
 int main (int argc, char **argv) {
@@ -116,17 +116,17 @@ int main (int argc, char **argv) {
                 chrono::duration<int64_t, nano> dur_sort = (s_end - s_start);
                 int64_t s_time = dur_sort.count();
 
-                cout<<"Nome do arquivo de entrada: "<<s<<" ||"
-                <<" Tamanho do problema: "<<cont<<" ||"
-                <<" Tempo de leitura: "<<r_time<<" ||"
-                <<" Tempo de algoritmo: "<<s_time<<" ||"
-                <<" Modelo do computador: MacBook Pro (13-inch, Mid 2012) ||"
-                <<" Nome do algoritmo: Merge Sort ||"
-                <<" Linguagem/Versão: C++ ||"
-                <<" Sistema operacional: macOS High Sierra ||"
-                <<" Largura de dados: 64 bits ||"
-                <<" Arquivo ordenado: "<<orderd<<" ||"
-                <<" N° USP: 11208238\n";
+                cout<<s<<" "
+                <<cont<<" "
+                <<r_time<<" "
+                <<s_time<<" "
+                <<"MacBook Pro (13-inch, Mid 2012) "
+                <<"Merge Sort "
+                <<"C++/g++7.4.0 "
+                <<"macOS High Sierra "
+                <<"64_bits "
+                <<orderd<<" "
+                <<"N° USP: 11208238\n";
             }
         }
         closedir(dirp);
