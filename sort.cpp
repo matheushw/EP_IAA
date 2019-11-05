@@ -14,52 +14,55 @@
 #include <ctime>
 #include <unistd.h>
 #include <chrono>
+#include <algorithm>
 #define mtime std::chrono::high_resolution_clock::time_point
-
-#define INF 1000000000
+#define N 100000010
 
 using namespace std;
 
+int arr[N];
+
+int cont;
+
 vector <int> vectorzao;
-long long int cont;
 
-string merge_sort(vector<int> &v){
-    if(v.size()==1) return "Vetor de tamanho 1";
+void swap(int* a, int* b) {  
+    int t = *a;  
+    *a = *b;  
+    *b = t;  
+}  
 
-    vector<int> u1, u2;
+int partition (int arr[], int low, int high) {  
+    int pivot = arr[high];
+    int i = (low - 1);
+  
+    for (int j = low; j <= high - 1; j++) {  
+    
+        if (arr[j] < pivot) {  
+            i++;
+            swap(&arr[i], &arr[j]);  
+        }  
+    }  
+    swap(&arr[i + 1], &arr[high]);  
+    return (i + 1);  
+}  
 
-    for(int i=0;i<v.size()/2;i++) u1.push_back(v[i]);
-    for(int i=v.size()/2;i<v.size();i++) u2.push_back(v[i]);
+void quickSort(int arr[], int low, int high)  
+{  
+    if (low < high) {  
+        int pi = partition(arr, low, high);  
 
-    merge_sort(u1);
-    merge_sort(u2);
-
-    u1.push_back(INF);
-    u2.push_back(INF);
-
-    int ini1=0, ini2=0;
-
-    for(int i=0;i<v.size();i++){    
-        if(u1[ini1]<u2[ini2]){
-            v[i]=u1[ini1];
-            ini1++;
-        }
-
-        else{
-            v[i]=u2[ini2];
-            ini2++;
-        }
-    }
-
-    return "Sim";
-}
+        quickSort(arr, low, pi - 1);  
+        quickSort(arr, pi + 1, high);  
+    }  
+}  
 
 int main (int argc, char **argv) {
 
     if (argc != 2) {
       cout<<("Digite o comando com nome da pasta onde se localizam os arquivos \".txt\" ex: \"./sort 1K\" \n");
       return 0;
-   }
+    }
 
     DIR           *dirp;
     struct dirent *directory;
@@ -69,11 +72,11 @@ int main (int argc, char **argv) {
     {
         while ((directory = readdir(dirp)) != NULL)
         {
-            cont = 0L;
             string s = directory->d_name;
             string file_name;
 
             if ((string)s != "." && (string)s != ".."){
+                cont = 0;
                 file_name = (string)argv[1]+ "/" + s;
                 int sum = 0;
                 int x;
@@ -97,36 +100,35 @@ int main (int argc, char **argv) {
                         size = x;
                         firstline = true;
                     } else {
+                        arr[cont] = x;
                         cont++;
-                        vectorzao.push_back(x);
                     }
                 }
 
                 mtime r_end = std::chrono::high_resolution_clock::now();
                 inFile.close();
-
                 chrono::duration<int64_t, nano> dur_read = (r_end - r_start);
                 int64_t r_time = dur_read.count();
 
 
                 mtime s_start = std::chrono::high_resolution_clock::now();
-                string orderd = merge_sort(vectorzao);
+                quickSort(arr,0,size-1);
                 mtime s_end = std::chrono::high_resolution_clock::now();
 
                 chrono::duration<int64_t, nano> dur_sort = (s_end - s_start);
                 int64_t s_time = dur_sort.count();
 
-                cout<<"Nome do arquivo de entrada: "<<s<<" ||"
-                <<" Tamanho do problema: "<<cont<<" ||"
-                <<" Tempo de leitura: "<<r_time<<" ||"
-                <<" Tempo de algoritmo: "<<s_time<<" ||"
-                <<" Modelo do computador: MacBook Pro (13-inch, Mid 2012) ||"
-                <<" Nome do algoritmo: Merge Sort ||"
-                <<" Linguagem/Versão: C++ ||"
-                <<" Sistema operacional: macOS High Sierra ||"
-                <<" Largura de dados: 64 bits ||"
-                <<" Arquivo ordenado: "<<orderd<<" ||"
-                <<" N° USP: 11208238\n";
+                cout<<s<<" "
+                <<size<<" "
+                <<r_time<<" "
+                <<s_time<<" "
+                <<"MacBookPro(13-inch,Mid_2012) "
+                <<"Quick_Sort "
+                <<"C++/g++7.4.0 "
+                <<"macOS_High_Sierra "
+                <<"64 "
+                <<"Orderd"<<" "
+                <<"11208238\n";
             }
         }
         closedir(dirp);
