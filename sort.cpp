@@ -110,7 +110,6 @@ int main (int argc, char **argv) {
                 chrono::duration<int64_t, nano> dur_read = (r_end - r_start);
                 int64_t r_time = dur_read.count();
 
-
                 mtime s_start = std::chrono::high_resolution_clock::now();
                 quickSort(arr,0,size-1);
                 mtime s_end = std::chrono::high_resolution_clock::now();
@@ -122,11 +121,11 @@ int main (int argc, char **argv) {
                 <<size<<" "
                 <<r_time<<" "
                 <<s_time<<" "
-                <<"MacBookPro(13-inch,Mid_2012) "
+                <<"i5-4690-2,5GHz-SSD-256G "
                 <<"Quick_Sort "
                 <<"C++/g++7.4.0 "
                 <<"macOS_High_Sierra "
-                <<"64 "
+                <<"64_bits "
                 <<"Orderd"<<" "
                 <<"11208238\n";
             }
